@@ -1,4 +1,4 @@
-import { promises as fs } from "fs";
+import { promises as fs } from 'fs';
 import FormData from 'form-data';
 
 import { RequestFunction, PredictedFileOutput } from './types';
@@ -10,7 +10,7 @@ export class Files {
     private _request: RequestFunction
   ) {}
 
-  private apiPath = '/files';
+  private apiPath = '/plg/v1/files';
 
   /**
    * Posts a file to get the predictions
@@ -18,7 +18,10 @@ export class Files {
    */
   async post(file: File | string): Promise<PredictedFileOutput> {
     /** Throw an error if the user a file that is not in the scope */
-    if (file && typeof file !== undefined) {
+    if (
+      !file ||
+      (file && typeof file !== 'string' && typeof file !== 'object')
+    ) {
       throw new Error(
         'Please provide either a binary file object or a path to a local file.'
       );

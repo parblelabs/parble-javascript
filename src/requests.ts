@@ -15,14 +15,14 @@ const _requestOptions = (
 
   const options = {
     host: apiUrl,
-    path,
-    method,
+    path: path,
+    method: method,
     headers: {
       Accept: 'application/json',
-      'X-API-Key': `token ${apiKey}`,
+      'X-API-Key': `${apiKey}`,
       ...additionalHeaders,
     },
-    body: payload,
+    body: payload ? payload : null,
   };
   let headers = options.headers;
   if (override_options && override_options.headers) {
@@ -54,7 +54,7 @@ export function _request<T>(
     try {
       const httpRequest = https.request(requestOptions, (parbleRes) => {
         let parbleResContent = '';
-
+        const startingResponse = parbleRes;
         parbleRes.on('data', (chunk) => {
           parbleResContent += chunk;
         });
@@ -68,7 +68,9 @@ export function _request<T>(
           }
 
           if (parbleRes.statusCode && parbleRes.statusCode >= 400) {
-            reject(`Parble: ${parbleResponse.error}: ${parbleResponse.reason}`);
+            reject(
+              `Parble: ${parbleResponse.error}: ${parbleResponse.reason} ${startingResponse}`
+            );
           }
 
           if (parbleResponse.error) {
