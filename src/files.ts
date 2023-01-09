@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import { promises as fs } from "fs";
 import FormData from 'form-data';
 
 import { RequestFunction, PredictedFileOutput } from './types';

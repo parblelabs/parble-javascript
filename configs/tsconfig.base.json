@@ -8,18 +8,9 @@
     "allowJs": true,
     "declaration": true,
     "declarationMap": true,
-    "allowSyntheticDefaultImports": true,
-    "lib": [
-      "ES2022",
-      "DOM"
-    ],
-    "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "NodeNext",
-    "outDir": "lib",
-    "declarationDir": "lib/types"
+    "allowSyntheticDefaultImports": true
   },
   "files": [
-    "src/index.ts"
+    "../src/index.ts"
   ]
 }
