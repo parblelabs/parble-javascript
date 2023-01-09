@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "checkJs": true,
+    "allowJs": true,
+    "declaration": true,
+    "declarationMap": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "NodeNext",
+    "outDir": "lib",
+    "declarationDir": "lib/types"
+  },
+  "files": [
+    "src/index.ts"
+  ]
+}
