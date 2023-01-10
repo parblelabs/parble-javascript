@@ -47,6 +47,7 @@ export class Files {
       };
     }
 
+    /** TODO: convert to request with form.pipe() */
     const response = await fetch(`https://${this._apiUrl}${this.apiPath}`, {
       method: 'POST',
       headers: {
