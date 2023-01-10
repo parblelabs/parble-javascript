@@ -1,5 +1,4 @@
-import FormData from 'form-data';
-
+import { ReadStream } from "fs";
 export type RequestFunction = NodeRequest | BrowserRequest;
 
 export type NodeRequest = (
@@ -7,10 +6,9 @@ export type NodeRequest = (
   apiKey: string,
   apiUrl: string,
   path: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload?: string | FormData | File,
+  extra_headers?: { [name: string]: string | number },
   // eslint-disable-next-line @typescript-eslint/ban-types
-  options?: Object
+  extra_options?: Object
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => Promise<any>;
 
@@ -19,7 +17,6 @@ export type BrowserRequest = (
   apiKey: string,
   apiUrl: string,
   path: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload?: string | FormData | File
+  extra_headers?: { [name: string]: string | number },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => Promise<any>;

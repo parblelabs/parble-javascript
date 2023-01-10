@@ -1,60 +1,51 @@
-import FormData from 'form-data';
 import https, { RequestOptions } from 'https';
 
 const _requestOptions = (
-  apiKey: string,
+  method: string,
   apiUrl: string,
   path: string,
-  method: string,
+  apiKey: string,
+  extra_headers?: { [name: string]: string | number },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload?: string | FormData | File,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  override_options?: any
+  extra_options?: any
 ): RequestOptions => {
-  const additionalHeaders: { [name: string]: string | number } = {};
-
   const options = {
+    method: method,
     host: apiUrl,
     path: path,
-    method: method,
     headers: {
       Accept: 'application/json',
       'X-API-Key': `${apiKey}`,
-      ...additionalHeaders,
+      ...extra_headers,
     },
-    body: payload ? payload : null,
+    ...extra_options,
   };
-  let headers = options.headers;
-  if (override_options && override_options.headers) {
-    headers = { ...headers, ...override_options.headers };
-  }
 
-  return { ...options, ...override_options, ...{ headers } };
+  return { ...options };
 };
 
 export function _request<T>(
   method: string,
-  apiKey: string,
   apiURL: string,
   path: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload?: string | FormData | File,
+  apiKey: string,
+  extra_headers?: { [name: string]: string | number },
   // eslint-disable-next-line @typescript-eslint/ban-types
-  options?: Object
+  extra_options?: Object
 ): Promise<T> {
   const requestOptions = _requestOptions(
-    apiKey,
+    method,
     apiURL,
     path,
-    method,
-    payload,
-    options
+    apiKey,
+    extra_headers,
+    extra_options
   );
   return new Promise((resolve, reject) => {
     try {
       const httpRequest = https.request(requestOptions, (parbleRes) => {
         let parbleResContent = '';
-        const startingResponse = parbleRes;
+
         parbleRes.on('data', (chunk) => {
           parbleResContent += chunk;
         });
@@ -69,7 +60,7 @@ export function _request<T>(
 
           if (parbleRes.statusCode && parbleRes.statusCode >= 400) {
             reject(
-              `Parble: ${parbleResponse.error}: ${parbleResponse.reason} ${startingResponse}`
+              `Parble: ${parbleResponse.error}: ${parbleResponse.reason} ${parbleRes.statusCode}`
             );
           }
 
