@@ -24,19 +24,29 @@ const parbleSDK = new parble.parbleSDK(PARBLE_TENANT, PARBLE_API_KEY);
 
 ## Examples
 ### Get predictions from a file upload
-#### With file path
-To process a file you just need to call the files.post method indicating the file path as argument.
+To process a file you just need to call the files.post method indicating the file local or temp path or using a base64 string as an argument.
+
+### With local or temp* file path
 ```js
 const predictedFileJson = await parbleSDK.files.post("/path/to/file");
 
 console.log(predictedFileJson);
 // Expect a JSON with: id, filename, timings, automated, number_of_pages and documents
 ```
+*if you are already posting formdata to your node.js application we recommend using 'IncomingForm' from 'formidable' to read the tempfile and use the temp path as an argument.
 
-### Check predictions from a file id
+### With a base64 string
+```js
+const predictedFileJson = await parbleSDK.files.post("data:@file/pdf;base64,JVBERi0c...");
+
+console.log(predictedFileJson);
+// Expect a JSON with: id, filename, timings, automated, number_of_pages and documents
+```
+
+## Check predictions from a file id
 To check predictions from a previously processed file you need to call the files.get method using the file id as argument.
 ```js
-const fileJson = await parbleSDK.files.get("fileID");
+const fileJson = await parbleSDK.files.get("id");
 
 console.log(fileJson);
 // Expect a JSON with: id, filename, timings, automated, number_of_pages and documents

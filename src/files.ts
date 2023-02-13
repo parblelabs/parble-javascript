@@ -1,8 +1,13 @@
-import { promises as fs } from 'fs';
-import { Readable } from 'stream';
+import { promises as fspromises } from 'fs';
 import FormData from 'form-data';
 
 import { RequestFunction, PredictedFileOutput } from './types';
+
+/* Classify the input type between pathlike or base64 */
+function classifyInput(input: string): string {
+  const inputType = input.startsWith('data:') ? 'base64' : 'pathlike';
+  return inputType;
+}
 
 export class Files {
   constructor(
@@ -15,62 +20,68 @@ export class Files {
 
   /**
    * Posts a file to get the predictions
-   * @param file Can be a path to a file (string) or the file objects itself
+   * @param file Can be a:
+   * - local or temp filepath such as /path/to/local/file.pdf;
+   * - base64 image string such as data:@file/pdf;base64,....
    */
-  async post(file: Readable | string): Promise<PredictedFileOutput> {
-    /** Throw an error if the user a file that is not in the scope */
-    if (
-      !file ||
-      (file && typeof file !== 'string' && typeof file !== 'object')
-    ) {
-      throw new Error(
-        'Please provide either a binary file object or a path to a local file.'
-      );
-    }
-    let extraOptions: any = {};
-    const data: any = new FormData();
+  async post(file: string): Promise<any> {
+    try {
+      /** Throw an error if the user submits a file that is not in the scope */
+      if (!file || typeof file !== 'string') {
+        throw new Error('Please provide the file in a valid string');
+      }
 
-    /** When argument is a path */
-    if (typeof file === 'string') {
-      const filenameArray = file.split('/');
-      const filename = filenameArray[filenameArray.length - 1];
-      const fileItem = await fs.readFile(file);
-      data.append('file', fileItem, { filename: filename });
-      extraOptions = {
-        formData: data,
+      const formData: any = new FormData();
+      const classifiedInput = classifyInput(file);
+      switch (classifiedInput) {
+        case 'pathlike':
+          const filenameArray = file.split('/');
+          const filename = filenameArray[filenameArray.length - 1];
+          const fileLocal = await fspromises.readFile(file);
+          formData.append('file', fileLocal, { filename: filename });
+          break;
+        case 'base64':
+          const baseArray = file.split(';base64,');
+          const nameContent = baseArray[0].split(':@')[1].replace('/', '.');
+          const fileContent = String(baseArray[1]);
+          const buffer64 = Buffer.from(fileContent, 'base64');
+          console.log('NAME: ', nameContent);
+          formData.append('file', buffer64, { filename: nameContent });
+          break;
+      }
+
+      const extraOptions = {
+        formData: formData,
       };
-      /** When argument is filelike */
-    } else {
-      data.append('file', file, { filename: 'filename.pdf' });
-      extraOptions = {
-        formData: data,
-      };
+
+      /** TODO: convert to request with form.pipe() */
+      const response = await fetch(`https://${this._apiUrl}${this.apiPath}`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'X-API-Key': `${this._apiKey}`,
+          'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
+        },
+        body: formData,
+      });
+      console.log('RESPONSE: ', response);
+      const result = await response.json();
+      return result;
+      // const extraHeaders = {
+      //   'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
+      // };
+
+      // return this._request(
+      //   'POST',
+      //   this._apiUrl,
+      //   this.apiPath,
+      //   this._apiKey,
+      //   extraHeaders,
+      //   extraOptions
+      // );
+    } catch (err) {
+      console.log('error: ', err);
     }
-
-    /** TODO: convert to request with form.pipe() */
-    const response = await fetch(`https://${this._apiUrl}${this.apiPath}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'X-API-Key': `${this._apiKey}`,
-        'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
-      },
-      body: data,
-    });
-    const result = await response.json();
-    return result;
-    // const extraHeaders = {
-    //   'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
-    // };
-
-    // return this._request(
-    //   'POST',
-    //   this._apiUrl,
-    //   this.apiPath,
-    //   this._apiKey,
-    //   extraHeaders,
-    //   extraOptions
-    // );
   }
 
   /**
