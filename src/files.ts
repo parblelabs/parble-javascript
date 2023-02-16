@@ -16,7 +16,7 @@ export class Files {
     private _request: RequestFunction
   ) {}
 
-  private apiPath = '/plg/v1/files';
+  private apiPath = '/files';
 
   /**
    * Posts a file to get the predictions
@@ -50,35 +50,20 @@ export class Files {
           break;
       }
 
-      const extraOptions = {
-        formData: formData,
+      const extraHeaders = {
+        Accept: 'application/json',
+        'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
       };
+      const body = formData;
 
-      /** TODO: convert to request with form.pipe() */
-      const response = await fetch(`https://${this._apiUrl}${this.apiPath}`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'X-API-Key': `${this._apiKey}`,
-          'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
-        },
-        body: formData,
-      });
-      console.log('RESPONSE: ', response);
-      const result = await response.json();
-      return result;
-      // const extraHeaders = {
-      //   'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
-      // };
-
-      // return this._request(
-      //   'POST',
-      //   this._apiUrl,
-      //   this.apiPath,
-      //   this._apiKey,
-      //   extraHeaders,
-      //   extraOptions
-      // );
+      return this._request(
+        'POST',
+        this._apiUrl,
+        this.apiPath,
+        this._apiKey,
+        extraHeaders,
+        body
+      );
     } catch (err) {
       console.log('error: ', err);
     }

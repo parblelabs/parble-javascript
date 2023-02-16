@@ -10,7 +10,7 @@ export class parbleSDK {
   files: Files;
 
   constructor(tenant: string, apiKey: string) {
-    this._apiUrl = `${tenant}.contract-t.fit`;
+    this._apiUrl = `api.test.parble.com/v1/${tenant}`;
     this._apiKey = apiKey;
 
     validateParams(this._apiKey, this._apiUrl);
