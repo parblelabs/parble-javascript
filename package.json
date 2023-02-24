@@ -1,31 +1,17 @@
 {
   "name": "parble",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Parble Javascript SDK",
-  "main": "./lib/cjs/index.js",
-  "types": "./lib/cjs/types/index.d.ts",
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./lib/esm/types/index.d.ts",
-        "default": "./lib/esm/index.mjs"
-      },
-      "require": {
-        "types": "./lib/cjs/types/index.d.ts",
-        "default": "./lib/cjs/index.js"
-      }
-    }
+  "type": "module",
+  "exports": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "engines": {
+    "node": ">=14.16"
   },
-  "files": [
-    "lib/**/*"
-  ],
   "scripts": {
     "clean": "rm -rf ./lib",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
-    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
-    "build:clean": "npm run clean && npm run build",
-    "prepack": "npm run build:clean",
+    "build": "npm run clean && tsc",
+    "prepack": "npm run build",
     "test": "mocha"
   },
   "repository": {

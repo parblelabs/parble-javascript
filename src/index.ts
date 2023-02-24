@@ -1,7 +1,7 @@
-import { Files } from './files';
-import { _request } from './requests';
+import { Files } from './files.js';
+import { _request } from './requests.js';
 
-import { validateParams } from './helpers';
+import { validateParams } from './helpers/validateParams.js';
 
 export class parbleSDK {
   private _apiUrl: string;

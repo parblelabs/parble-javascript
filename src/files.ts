@@ -1,7 +1,8 @@
 import { promises as fspromises } from 'fs';
 import FormData from 'form-data';
 
-import { RequestFunction, PredictedFileOutput } from './types';
+import { RequestFunction } from './types/requestFunction.js';
+import { PredictedFileOutput } from './types/predictedFileOutput.js';
 
 /* Classify the input type between pathlike or base64 */
 function classifyInput(input: string): string {
@@ -42,7 +43,8 @@ export class Files {
           break;
         case 'base64':
           const baseArray = file.split(';base64,');
-          const nameContent = baseArray[0].split(':@')[1].replace('/', '.');
+          const splitName = baseArray[0] ? baseArray[0].split(':@') : "";
+          const nameContent = splitName[1] ? splitName[1].replace('/', '.') : "";
           const fileContent = String(baseArray[1]);
           const buffer64 = Buffer.from(fileContent, 'base64');
           console.log('NAME: ', nameContent);

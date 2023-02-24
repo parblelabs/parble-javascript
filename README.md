@@ -17,9 +17,9 @@ The SDK requires 2 settings to connect and authenticate to the Parble API, which
 - Your personal API-Key
 
 ```js
-const parble = require("parble");
+import { parbleSDK } from 'parble'
 
-const parbleSDK = new parble.parbleSDK(PARBLE_TENANT, PARBLE_API_KEY);
+const parble = new parbleSDK(PARBLE_TENANT, PARBLE_API_KEY);
 ```
 
 ## Examples
@@ -28,7 +28,7 @@ To process a file you just need to call the files.post method indicating the fil
 
 ### With local or temp* file path
 ```js
-const predictedFileJson = await parbleSDK.files.post("/path/to/file");
+const predictedFileJson = await parble.files.post("/path/to/file");
 
 console.log(predictedFileJson);
 // Expect a JSON with: id, filename, timings, automated, number_of_pages and documents
@@ -37,7 +37,7 @@ console.log(predictedFileJson);
 
 ### With a base64 string
 ```js
-const predictedFileJson = await parbleSDK.files.post("data:@file/pdf;base64,JVBERi0c...");
+const predictedFileJson = await parble.files.post("data:@file/pdf;base64,JVBERi0c...");
 
 console.log(predictedFileJson);
 // Expect a JSON with: id, filename, timings, automated, number_of_pages and documents
@@ -46,7 +46,7 @@ console.log(predictedFileJson);
 ## Check predictions from a file id
 To check predictions from a previously processed file you need to call the files.get method using the file id as argument.
 ```js
-const fileJson = await parbleSDK.files.get("id");
+const fileJson = await parble.files.get("id");
 
 console.log(fileJson);
 // Expect a JSON with: id, filename, timings, automated, number_of_pages and documents

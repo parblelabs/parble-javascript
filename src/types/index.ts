@@ -1,4 +1,4 @@
 
-export * from "./requestFunction";
-export * from "./predictedFileOutput";
-export * from "./document";
+export * from "./requestFunction.js";
+export * from "./predictedFileOutput.js";
+export * from "./document.js";
