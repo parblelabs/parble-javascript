@@ -5,19 +5,18 @@ import { RequestFunction } from './types/requestFunction.js';
 import { PredictedFileOutput } from './types/predictedFileOutput.js';
 
 /* Classify the input type between pathlike or base64 */
-function classifyInput(input: string): string {
+export function classifyInput(input: string): string {
   const inputType = input.startsWith('data:') ? 'base64' : 'pathlike';
   return inputType;
 }
 
 export class Files {
+  private apiPath = '/files';
   constructor(
     private _apiKey: string,
     private _apiUrl: string,
     private _request: RequestFunction
   ) {}
-
-  private apiPath = '/files';
 
   /**
    * Posts a file to get the predictions
@@ -43,11 +42,12 @@ export class Files {
           break;
         case 'base64':
           const baseArray = file.split(';base64,');
-          const splitName = baseArray[0] ? baseArray[0].split(':@') : "";
-          const nameContent = splitName[1] ? splitName[1].replace('/', '.') : "";
+          const splitName = baseArray[0] ? baseArray[0].split(':@') : '';
+          const nameContent = splitName[1]
+            ? splitName[1].replace('/', '.')
+            : '';
           const fileContent = String(baseArray[1]);
           const buffer64 = Buffer.from(fileContent, 'base64');
-          console.log('NAME: ', nameContent);
           formData.append('file', buffer64, { filename: nameContent });
           break;
       }

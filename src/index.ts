@@ -1,6 +1,5 @@
 import { Files } from './files.js';
-import { _request } from './requests.js';
-
+import { _request } from './helpers/requests.js';
 import { validateParams } from './helpers/validateParams.js';
 
 export class parbleSDK {

@@ -4,7 +4,7 @@ import { assert } from 'chai';
 import { parbleSDK } from '../src/index.js';
 import { validateParams } from '../src/helpers/validateParams.js';
 
-describe('NPM Package check', () => {
+describe('NPM Package entry check', () => {
   it('should be a function', () => {
     assert.strictEqual(typeof parbleSDK, 'function');
   });
