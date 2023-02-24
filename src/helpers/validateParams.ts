@@ -1,9 +1,9 @@
-export function validateParams(apiKey: string, apiUrl: string): void {
+export function validateParams(apiKey: string, tenant: string): void {
   if (!apiKey || apiKey.trim().length === 0) {
     throw new Error('Parble: API key is required');
   }
 
-  if (!apiUrl || apiUrl.trim().length === 0) {
-    throw new Error('Parble: API url should be a valid url or not provided');
+  if (!tenant || tenant.trim().length === 0) {
+    throw new Error('Parble: Tenant not provided');
   }
 }

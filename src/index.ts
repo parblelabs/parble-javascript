@@ -10,10 +10,10 @@ export class parbleSDK {
   files: Files;
 
   constructor(tenant: string, apiKey: string) {
+    validateParams(apiKey, tenant);
     this._apiUrl = `api.test.parble.com/v1/${tenant}`;
     this._apiKey = apiKey;
 
-    validateParams(this._apiKey, this._apiUrl);
 
     this.files = new Files(
       this._apiKey,
