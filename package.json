@@ -2,7 +2,6 @@
   "name": "parble",
   "version": "1.0.1",
   "description": "Parble Javascript SDK",
-  "type": "module",
   "exports": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "engines": {
