@@ -1,7 +1,7 @@
 import { promises as fspromises } from 'fs';
 import FormData from 'form-data';
+import axios from 'axios';
 
-import { requestOptions } from './helpers/requestOptions.js';
 import { PredictedFileOutput } from './types/predictedFileOutput.js';
 
 /* Classify the input type between pathlike or base64 */
@@ -12,10 +12,7 @@ export function classifyInput(input: string): string {
 
 export class Files {
   private apiPath = '/files';
-  constructor(
-    private _apiKey: string,
-    private _apiUrl: string
-  ) {}
+  constructor(private _apiKey: string, private _apiUrl: string) {}
 
   /**
    * Posts a file to get the predictions
@@ -51,15 +48,14 @@ export class Files {
           break;
       }
 
-      const extraHeaders = {
-        Accept: 'application/json',
-        'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
-      };
-
-      const requestOpts = requestOptions('POST', this._apiKey, extraHeaders, formData)
       const postDocUrl = `https://${this._apiUrl}${this.apiPath}`;
-      const response = await fetch(postDocUrl, requestOpts);
-      const result = await response.json();
+      const result = await axios.post(postDocUrl, formData, {
+        headers: {
+          'X-API-Key': this._apiKey,
+          Accept: 'application/json',
+          'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
+        },
+      });
 
       return result;
     } catch (err) {
@@ -72,11 +68,13 @@ export class Files {
    * @param fileId Unique identifier for the file results to retrieve
    */
   async get(fileId: string): Promise<PredictedFileOutput> {
-    const requestOpts = requestOptions('GET', this._apiKey)
     const getDocUrl = `https://${this._apiUrl}${this.apiPath}/${fileId}`;
-    const response = await fetch(getDocUrl, requestOpts);
-    const result = await response.json();
-  
-    return result;
+    const result = await axios.get(getDocUrl, {
+      headers: {
+        'X-API-Key': this._apiKey,
+      },
+    });
+
+    return result.data;
   }
 }

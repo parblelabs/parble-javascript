@@ -1,9 +1,8 @@
 import 'mocha';
-import { assert } from 'chai';
-import FormData from 'form-data';
+import { assert, expect } from 'chai';
+import nock from 'nock';
 
 import { Files, classifyInput } from '../src/files';
-import { requestOptions } from '../src/helpers/requestOptions';
 
 describe('Files class check', () => {
   it('should be a function', () => {
@@ -32,26 +31,41 @@ describe('Files input classification', () => {
 });
 
 describe('Files POST function', () => {
-  it('options get parse correctly', () => {
-    const extraHeaders = {
-      Accept: 'application/json',
-      'Content-Type':
-        'multipart/form-data; boundary=WebKitFormBoundary7MA4YWxkTrZu0gW',
-    };
-    const body: any = new FormData();
-    const expectedOpts = {
-      method: 'POST',
-      headers: {
-        'X-API-Key': '123test',
-        ...extraHeaders,
-      },
-      body: body,
-    };
-    assert.deepEqual(
-      requestOptions('POST', '123test', extraHeaders, body),
-      expectedOpts
-    );
-  });
+  it('returns correct file json when id is correct', async () => {
+    const apiKey = `${process.env.TEST_API_KEY}`;
+    const tenantUrl = `${process.env.TEST_URL}/${process.env.TEST_TENANT}`;
+    const files = new Files(apiKey, tenantUrl);
+    // Intercept the request
+    const scope = nock(`https://${tenantUrl}/files`)
+      .post(``)
+      .reply(200, { message: 'Mocked response' });
+    // Make the request
+    const response = await files.post('./tests/bundle_eml.pdf');
+    // Assert that the request was made once
+    expect(scope.isDone()).to.be.true;
 
-  it('return')
+    console.log('RESP', response);
+    // Assert that the response matches the mocked response
+    expect(response).to.deep.equal({ message: 'Mocked POST response' });
+  });
+});
+
+describe('Files GET function', () => {
+  it('returns correct file json when id is correct', async () => {
+    const apiKey = `${process.env.TEST_API_KEY}`;
+    const tenantUrl = `${process.env.TEST_URL}/${process.env.TEST_TENANT}`;
+    const files = new Files(apiKey, tenantUrl);
+    // Intercept the request
+    const scope = nock(`https://${tenantUrl}/files/${process.env.TEST_FILE}`)
+      .get(``)
+      .reply(200, { message: 'Mocked response' });
+    // Make the request
+    const response = await files.get(`${process.env.TEST_FILE}`);
+    // Assert that the request was made once
+    expect(scope.isDone()).to.be.true;
+
+    console.log('RESP', response);
+    // Assert that the response matches the mocked response
+    expect(response).to.deep.equal({ message: 'Mocked GET response' });
+  });
 });
