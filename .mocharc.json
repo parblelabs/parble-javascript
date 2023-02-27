@@ -3,5 +3,6 @@
     "ts"
   ],
   "spec": "./**/*.spec.ts",
-  "require": "ts-node/register"
+  "require": "ts-node/register",
+  "timeout": 10000
 }
