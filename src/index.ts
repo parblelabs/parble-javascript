@@ -1,5 +1,4 @@
 import { Files } from './files.js';
-import { _request } from './helpers/requests.js';
 import { validateParams } from './helpers/validateParams.js';
 
 export class parbleSDK {
@@ -16,8 +15,7 @@ export class parbleSDK {
 
     this.files = new Files(
       this._apiKey,
-      this._apiUrl,
-      _request
+      this._apiUrl
     );
   }
 }

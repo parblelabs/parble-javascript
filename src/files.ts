@@ -1,7 +1,7 @@
 import { promises as fspromises } from 'fs';
 import FormData from 'form-data';
 
-import { RequestFunction } from './types/requestFunction.js';
+import { requestOptions } from './helpers/requestOptions.js';
 import { PredictedFileOutput } from './types/predictedFileOutput.js';
 
 /* Classify the input type between pathlike or base64 */
@@ -14,8 +14,7 @@ export class Files {
   private apiPath = '/files';
   constructor(
     private _apiKey: string,
-    private _apiUrl: string,
-    private _request: RequestFunction
+    private _apiUrl: string
   ) {}
 
   /**
@@ -56,16 +55,13 @@ export class Files {
         Accept: 'application/json',
         'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
       };
-      const body = formData;
 
-      return this._request(
-        'POST',
-        this._apiUrl,
-        this.apiPath,
-        this._apiKey,
-        extraHeaders,
-        body
-      );
+      const requestOpts = requestOptions('POST', this._apiKey, extraHeaders, formData)
+      const postDocUrl = `https://${this._apiUrl}${this.apiPath}`;
+      const response = await fetch(postDocUrl, requestOpts);
+      const result = await response.json();
+
+      return result;
     } catch (err) {
       console.log('error: ', err);
     }
@@ -76,11 +72,11 @@ export class Files {
    * @param fileId Unique identifier for the file results to retrieve
    */
   async get(fileId: string): Promise<PredictedFileOutput> {
-    return this._request(
-      'GET',
-      this._apiUrl,
-      `${this.apiPath}/${fileId}`,
-      this._apiKey
-    );
+    const requestOpts = requestOptions('GET', this._apiKey)
+    const getDocUrl = `https://${this._apiUrl}${this.apiPath}/${fileId}`;
+    const response = await fetch(getDocUrl, requestOpts);
+    const result = await response.json();
+  
+    return result;
   }
 }

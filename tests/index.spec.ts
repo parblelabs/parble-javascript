@@ -1,8 +1,8 @@
 import 'mocha';
 import { assert } from 'chai';
 
-import { parbleSDK } from '../src/index.js';
-import { validateParams } from '../src/helpers/validateParams.js';
+import { parbleSDK } from '../src/index';
+import { validateParams } from '../src/helpers/validateParams';
 
 describe('NPM Package entry check', () => {
   it('should be a function', () => {
