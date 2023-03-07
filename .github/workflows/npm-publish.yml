@@ -4,8 +4,12 @@
 name: Node.js Package
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
 
 jobs:
   build:
@@ -16,6 +20,7 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
+      - run: npm prepack
       - run: npm test
         env:
           TEST_URL: ${{secrets.TEST_URL}}
@@ -33,6 +38,7 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      - run: npm prepack
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
