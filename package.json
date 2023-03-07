@@ -1,6 +1,6 @@
 {
   "name": "parble",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Parble Javascript SDK",
   "exports": "./lib/index.js",
   "types": "./lib/index.d.ts",
