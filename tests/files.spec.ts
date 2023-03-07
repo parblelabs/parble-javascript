@@ -2,7 +2,7 @@ import 'mocha';
 import { assert, expect } from 'chai';
 
 import { Files, classifyInput } from '../src/files';
-import { data as mockFileOutput } from './resources/bundle_eml_mock';
+import { data as mockFileOutput } from './resources/automated_test_file_mock';
 
 describe('Files class check', () => {
   it('should be a function', () => {
@@ -39,7 +39,7 @@ describe('Files POST function', () => {
   });
 
   it('returns correct file json when filepath is provided', async () => {
-    const res = await files.post('./tests/resources/bundle_eml.pdf');
+    const res = await files.post('./tests/resources/automated_test_file.pdf');
     expect(res.filename).to.deep.equal(mockFileOutput.filename);
     expect(res.documents).to.deep.equal(mockFileOutput.documents);
   });

@@ -6,6 +6,7 @@ export const data: PredictedFileOutput = {
   documents: [
     {
       automated: false,
+      filename: 'automated_test_file.pdf',
       classification: {
         automated: true,
         confidence: 95,
@@ -22,7 +23,7 @@ export const data: PredictedFileOutput = {
           value: 'capture@parble.com',
         },
         email_date: {
-          automated: false,
+          automated: true,
           confidence: 70,
           page: 0,
           text: 'Wed,23 Nov 2022 09:23:26 +0000',
@@ -47,6 +48,7 @@ export const data: PredictedFileOutput = {
     },
     {
       automated: false,
+      filename: 'automated_test_file.pdf',
       classification: {
         automated: true,
         confidence: 94,
@@ -77,7 +79,7 @@ export const data: PredictedFileOutput = {
           value: 'Specimen',
         },
         id_gender: {
-          automated: false,
+          automated: true,
           confidence: 8,
           page: 1,
           text: 'F',
@@ -94,7 +96,7 @@ export const data: PredictedFileOutput = {
       line_items: {},
     },
   ],
-  filename: 'bundle_eml.pdf',
+  filename: 'automated_test_file.pdf',
   number_of_pages: 2,
   timings: {
     done: new Date(),

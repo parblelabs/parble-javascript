@@ -33,6 +33,10 @@ export type Document = {
    */
   automated: boolean;
   /**
+   * Belonging file filename.
+   */
+  filename: string;
+  /**
    * Classification information about the document.
    */
   classification: Classification;
