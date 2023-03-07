@@ -12,21 +12,6 @@ on:
       - "main"
 
 jobs:
-  envvars:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: |
-          touch .env
-          echo TEST_URL=${{ secrets.TEST_URL }} >> .env
-          echo TEST_TENANT=${{ secrets.TEST_TENANT }} >> .env
-          echo TEST_API_KEY=${{ secrets.TEST_API_KEY }} >> .env
-          echo TEST_FILE=${{ secrets.TEST_FILE }} >> .env
-          cat .env
-
   build:
     needs: envvars
     runs-on: ubuntu-latest
@@ -37,7 +22,13 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm run prepack
-      - run: cat .env
+      - run: |
+          touch .env
+          echo TEST_URL=${{ secrets.TEST_URL }} >> .env
+          echo TEST_TENANT=${{ secrets.TEST_TENANT }} >> .env
+          echo TEST_API_KEY=${{ secrets.TEST_API_KEY }} >> .env
+          echo TEST_FILE=${{ secrets.TEST_FILE }} >> .env
+          cat .env
       - run: npm test
 
   publish-npm:
