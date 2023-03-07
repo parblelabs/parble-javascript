@@ -37,6 +37,7 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm run prepack
+      - run: cat .env
       - run: npm test
 
   publish-npm:
@@ -50,7 +51,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run prepack
-      - run: cat .env
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
