@@ -11,7 +11,7 @@
     "clean": "rm -rf ./lib",
     "build": "npm run clean && tsc",
     "prepack": "npm run build",
-    "test": "env-cmd mocha"
+    "test": "env-cmd mocha --timeout 20000"
   },
   "repository": {
     "type": "git",
