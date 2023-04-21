@@ -9,7 +9,7 @@ export class parbleSDK {
 
   constructor(tenant: string, apiKey: string) {
     validateParams(apiKey, tenant);
-    this._apiUrl = `api.test.parble.com/v1/${tenant}`;
+    this._apiUrl = `api.parble.com/v1/${tenant}`;
     this._apiKey = apiKey;
 
 
