@@ -1,5 +1,5 @@
 # Parble Javascript SDK
-[![Package build](https://github.com/parblelabs/parble-javascript/actions/workflows/npm-publish.yml/badge.svg?branch=main&event=push)](https://github.com/parblelabs/parble-javascript/actions/workflows/npm-publish.yml)
+[![Package build](https://github.com/parblelabs/parble-javascript/actions/workflows/npm-publish.yml/badge.svg?branch=main)](https://github.com/parblelabs/parble-javascript/actions/workflows/npm-publish.yml)
 
 Official Node.js SDK for [Parble](https://parble.com/home) intelligent document processing API.
 
