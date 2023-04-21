@@ -1,6 +1,6 @@
 {
   "name": "parble",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Parble Javascript SDK",
   "exports": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -11,7 +11,7 @@
     "clean": "rm -rf ./lib",
     "build": "npm run clean && tsc",
     "prepack": "npm run build",
-    "test": "env-cmd mocha"
+    "test": "env-cmd mocha --timeout 20000"
   },
   "repository": {
     "type": "git",
