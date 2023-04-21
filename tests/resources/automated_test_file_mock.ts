@@ -5,7 +5,7 @@ export const data: PredictedFileOutput = {
   automated: false,
   documents: [
     {
-      filename: 'bundle_eml.pdf',
+      filename: 'automated_test_file.pdf',
       automated: false,
       classification: {
         automated: true,
@@ -52,7 +52,7 @@ export const data: PredictedFileOutput = {
       line_items: {},
     },
     {
-      filename: 'bundle_eml.pdf',
+      filename: 'automated_test_file.pdf',
       automated: false,
       classification: {
         automated: true,
