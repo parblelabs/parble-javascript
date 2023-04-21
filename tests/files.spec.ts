@@ -39,6 +39,7 @@ describe('Files POST function', () => {
   });
 
   it('returns correct file json when filepath is provided', async () => {
+    this.timeout(20000); // set a timeout of 20 seconds for upload files
     const res = await files.post('./tests/resources/automated_test_file.pdf');
     expect(res.filename).to.deep.equal(mockFileOutput.filename);
     expect(res.documents).to.deep.equal(mockFileOutput.documents);
