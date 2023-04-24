@@ -2,7 +2,7 @@ import { promises as fspromises } from 'fs';
 import FormData from 'form-data';
 import axios from 'axios';
 
-import { PredictedFileOutput } from './types/predictedFileOutput.js';
+import { PredictedFileOutput } from './types/predictedFileOutput';
 
 /* Classify the input type between pathlike or base64 */
 export function classifyInput(input: string): string {

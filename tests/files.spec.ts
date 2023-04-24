@@ -44,7 +44,9 @@ describe('Files POST function', () => {
     expect(res.documents).to.deep.equal(mockFileOutput.documents);
   });
   it('returns error when file is unreadable', async () => {
-    const res = await files.post('./tests/resources/appicon-terciary-shade.png');
+    const res = await files.post(
+      './tests/resources/appicon-terciary-shade.png'
+    );
     expect(res).to.deep.equal({
       status: 415,
       error: 'issue occurred while uploading',

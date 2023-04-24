@@ -1,4 +1,4 @@
-import { Document } from './document.js';
+import { Document } from './document';
 
 /**
  * Timing information for a file
