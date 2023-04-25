@@ -11,8 +11,8 @@ export function classifyInput(input: string): string {
 }
 
 export class Files {
-  private apiPath = '/files';
   constructor(private _apiKey: string, private _apiUrl: string) {}
+  private apiPath = '/files';
 
   /**
    * Posts a file to get the predictions
@@ -20,7 +20,7 @@ export class Files {
    * - local or temp filepath such as /path/to/local/file.pdf;
    * - base64 image string such as data:@file/pdf;base64,....
    */
-  async post(file: string): Promise<any> {
+  async post(file: string): Promise<PredictedFileOutput> {
     /** Throw an error if the user submits a file that is not in the scope */
     if (!file || typeof file !== 'string') {
       throw new Error('Please provide the file in a valid string');
@@ -54,21 +54,12 @@ export class Files {
           'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
         },
       });
-      const result =
-        response.status === 200
-          ? response.data
-          : {
-              status: response.status,
-              error: 'issue occurred while uploading',
-            };
-
-      return result;
-    } catch (err: any) {
-      console.log('Parble error: ', err.response.status);
-      return {
-        status: err.response.status,
-        error: 'issue occurred while uploading',
-      };
+      if (response.status !== 200) {
+        throw new Error('Error while uploading the file');
+      }
+      return response.data;
+    } catch (err) {
+      throw new Error('Error while uploading the file');
     }
   }
 
@@ -76,7 +67,7 @@ export class Files {
    * Retrieves prediction results for the provided fileId
    * @param fileId Unique identifier for the file results to retrieve
    */
-  async get(fileId: string): Promise<PredictedFileOutput | any> {
+  async get(fileId: string): Promise<PredictedFileOutput> {
     const getDocUrl = `https://${this._apiUrl}${this.apiPath}/${fileId}`;
     try {
       const response = await axios.get(getDocUrl, {
@@ -84,22 +75,12 @@ export class Files {
           'X-API-Key': this._apiKey,
         },
       });
-
-      const result =
-        response.status === 200
-          ? response.data
-          : {
-              status: response.status,
-              error: 'file not found',
-            };
-
-      return result;
-    } catch (err: any) {
-      console.log('Parble error: ', err.response.status);
-      return {
-        status: err.response.status,
-        error: 'issue occurred while getting the file json',
-      };
+      if (response.status !== 200) {
+        throw new Error('File not found');
+      }
+      return response.data;
+    } catch (err) {
+      throw new Error('File not found');
     }
   }
 }

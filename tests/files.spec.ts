@@ -44,13 +44,12 @@ describe('Files POST function', () => {
     expect(res.documents).to.deep.equal(mockFileOutput.documents);
   });
   it('returns error when file is unreadable', async () => {
-    const res = await files.post(
-      './tests/resources/appicon-terciary-shade.png'
-    );
-    expect(res).to.deep.equal({
-      status: 415,
-      error: 'issue occurred while uploading',
-    });
+    try {
+      await files.post('./tests/resources/appicon-terciary-shade.png');
+      assert.fail('should have thrown an error');
+    } catch (error) {
+      assert.equal(error.message, 'Error while uploading the file');
+    }
   });
 });
 
@@ -68,10 +67,11 @@ describe('Files GET function', () => {
     expect(res.documents).to.deep.equal(mockFileOutput.documents);
   });
   it('returns correct error when id is incorrect', async () => {
-    const res = await files.get('123test');
-    expect(res).to.deep.equal({
-      status: 404,
-      error: 'issue occurred while getting the file json',
-    });
+    try {
+      await files.get('non-existent-file-id');
+      assert.fail('should have thrown an error');
+    } catch (error) {
+      assert.equal(error.message, 'File not found');
+    }
   });
 });

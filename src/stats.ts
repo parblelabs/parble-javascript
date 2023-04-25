@@ -4,14 +4,14 @@ import { AutomationStats } from './types/statsAutomation';
 import { UsageStats } from './types/statsUsage';
 
 export class Stats {
-  private apiPath = '/stats';
   constructor(private _apiKey: string, private _apiUrl: string) {}
-
+  private apiPath = '/stats';
   private passedHeaders = {
     headers: {
       'X-API-Key': this._apiKey,
     },
   };
+
   /**
    * Gets the usage stats in certain time period
    * @param start_date Can be a: string i.ex.:(2020-01-20T00:00:00)
@@ -20,19 +20,13 @@ export class Stats {
   async get_usage(
     start_date: string,
     end_date: string
-  ): Promise<AutomationStats | Error> {
+  ): Promise<AutomationStats> {
     const getUsageUrl = `https://${this._apiUrl}${this.apiPath}/usage?start_date=${start_date}&end_date=${end_date}`;
     try {
       const response = await axios.get(getUsageUrl, this.passedHeaders);
-      if (response.status !== 200) {
-        throw new Error(
-          `Error ${response.status} while getting the usage stats`
-        );
-      }
       return response.data;
-    } catch (err: any) {
-      console.log('Parble error: ', err);
-      return err;
+    } catch (err) {
+      throw new Error('Invalid range of dates');
     }
   }
 
@@ -44,19 +38,13 @@ export class Stats {
   async get_automation(
     start_date: string,
     end_date: string
-  ): Promise<UsageStats | Error> {
+  ): Promise<UsageStats> {
     const getAutomationUrl = `https://${this._apiUrl}${this.apiPath}/automation?start_date=${start_date}&end_date=${end_date}`;
     try {
       const response = await axios.get(getAutomationUrl, this.passedHeaders);
-      if (response.status !== 200) {
-        throw new Error(
-          `Error ${response.status} while getting the automation stats`
-        );
-      }
       return response.data;
-    } catch (err: any) {
-      console.log('Parble error: ', err);
-      return err;
+    } catch (err) {
+      throw new Error('Invalid range of dates');
     }
   }
 }
