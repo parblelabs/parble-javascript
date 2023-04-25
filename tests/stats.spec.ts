@@ -11,10 +11,10 @@ describe('Stats class check', () => {
     const stats = new Stats('123test', '123test');
     assert.property(stats, 'apiPath');
     assert.property(stats, 'passedHeaders');
-    assert.ok(stats.get_usage);
-    assert.strictEqual(typeof stats.get_usage, 'function');
-    assert.ok(stats.get_automation);
-    assert.strictEqual(typeof stats.get_automation, 'function');
+    assert.ok(stats.usage);
+    assert.strictEqual(typeof stats.usage, 'function');
+    assert.ok(stats.automation);
+    assert.strictEqual(typeof stats.automation, 'function');
   });
 });
 
@@ -27,7 +27,7 @@ describe('Stats USAGE function', () => {
   });
 
   it('returns correct counts json when correct', async () => {
-    const usage = await stats.get_usage(
+    const usage = await stats.usage(
       '2020-01-20T00:00:00',
       '2024-01-20T23:59:59'
     );
@@ -37,7 +37,7 @@ describe('Stats USAGE function', () => {
     expect(usage).to.have.property('pages').that.is.a('number');
   });
   it('returns empty counts when end is before start', async () => {
-    const usage = await stats.get_usage(
+    const usage = await stats.usage(
       '2024-01-20T23:59:59',
       '2020-01-20T00:00:00'
     );
@@ -49,7 +49,7 @@ describe('Stats USAGE function', () => {
   });
   it('returns error 400 when range is wrongly defined', async () => {
     try {
-      await stats.get_usage('bad-range-start', 'bad-range-end');
+      await stats.usage('bad-range-start', 'bad-range-end');
       assert.fail('should have thrown an error');
     } catch (error) {
       assert.equal(error.message, 'Invalid range of dates');
@@ -66,7 +66,7 @@ describe('Stats AUTOMATION function', () => {
   });
 
   it('returns correct counts json when correct', async () => {
-    const automation = await stats.get_automation(
+    const automation = await stats.automation(
       '2020-01-20T00:00:00',
       '2024-01-20T23:59:59'
     );
@@ -76,7 +76,7 @@ describe('Stats AUTOMATION function', () => {
     expect(automation).to.have.property('fields').that.is.an('object');
   });
   it('returns empty counts when end is before start', async () => {
-    const automation = await stats.get_automation(
+    const automation = await stats.automation(
       '2024-01-20T23:59:59',
       '2020-01-20T00:00:00'
     );
@@ -100,7 +100,7 @@ describe('Stats AUTOMATION function', () => {
   });
   it('returns error 400 when range is wrongly defined', async () => {
     try {
-      await stats.get_automation('bad-range-start', 'bad-range-end');
+      await stats.automation('bad-range-start', 'bad-range-end');
       assert.fail('should have thrown an error');
     } catch (error) {
       assert.equal(error.message, 'Invalid range of dates');

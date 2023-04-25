@@ -17,7 +17,7 @@ export class Stats {
    * @param start_date Can be a: string i.ex.:(2020-01-20T00:00:00)
    * @param end_date Can be a: string i.ex.:(2020-01-20T23:59:59)
    */
-  async get_usage(
+  async usage(
     start_date: string,
     end_date: string
   ): Promise<AutomationStats> {
@@ -35,7 +35,7 @@ export class Stats {
    * @param start_date Can be a: string i.ex.:(2020-01-20T00:00:00)
    * @param end_date Can be a: string i.ex.:(2020-01-20T23:59:59)
    */
-  async get_automation(
+  async automation(
     start_date: string,
     end_date: string
   ): Promise<UsageStats> {
