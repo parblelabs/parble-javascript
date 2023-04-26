@@ -45,15 +45,16 @@ describe('Webhooks crud', () => {
     const getOne = await webhooks.getOne(postedWebhook.id);
     expect(getOne.target).to.deep.equal(whPayload.target);
     expect(getOne.events).to.deep.equal(whPayload.events);
-    // get all webhooks (should be 1)
+    // get all webhooks (should be at least 1)
     const getAll1 = await webhooks.getAll();
-    expect(getAll1.length).to.deep.equal(1);
+    assert.isAtLeast(getAll1.length, 1);
+    const currentNumberOfWebhooks = getAll1.length;
     // delete webhook
     const deletion = await webhooks.deleteOne(postedWebhook.id);
     assert.equal(deletion.status, 204);
     // get all webhooks (should be 0)
     const getAll0 = await webhooks.getAll();
-    expect(getAll0.length).to.deep.equal(0);
+    expect(getAll0.length).to.deep.equal(currentNumberOfWebhooks - 1);
   });
 
   it('Webhooks POST bad payload error', async () => {

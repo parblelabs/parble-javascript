@@ -1,3 +1,4 @@
+import { Apikeys } from './apikeys';
 import { Files } from './files';
 import { Stats } from './stats';
 import { Webhooks } from './webhooks';
@@ -7,6 +8,7 @@ export class parbleSDK {
   private _apiUrl: string;
   private _apiKey: string;
 
+  apikeys: Apikeys;
   files: Files;
   stats: Stats;
   webhooks: Webhooks;
@@ -16,6 +18,7 @@ export class parbleSDK {
     this._apiUrl = `api.parble.com/v1/${tenant}`;
     this._apiKey = apiKey;
 
+    this.apikeys = new Apikeys(this._apiKey, this._apiUrl);
     this.files = new Files(this._apiKey, this._apiUrl);
     this.stats = new Stats(this._apiKey, this._apiUrl);
     this.webhooks = new Webhooks(this._apiKey, this._apiUrl);
