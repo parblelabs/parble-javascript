@@ -20,7 +20,7 @@ export class Apikeys {
     try {
       const response = await axios.post(
         createApikeyUrl,
-        {},
+        null,
         this.passedHeaders
       );
       return response.data;
