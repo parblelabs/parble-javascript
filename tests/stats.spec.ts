@@ -18,7 +18,7 @@ describe('Stats class check', () => {
   });
 });
 
-describe('Stats USAGE function', () => {
+describe('Stats crud', () => {
   let apiKey: string, tenantUrl: string, stats: Stats;
   beforeEach(() => {
     apiKey = `${process.env.TEST_API_KEY}`;
@@ -26,7 +26,7 @@ describe('Stats USAGE function', () => {
     stats = new Stats(apiKey, tenantUrl);
   });
 
-  it('returns correct counts json when correct', async () => {
+  it('Stats USAGE returns correct counts json when correct', async () => {
     const usage = await stats.usage(
       '2020-01-20T00:00:00',
       '2024-01-20T23:59:59'
@@ -36,7 +36,7 @@ describe('Stats USAGE function', () => {
     expect(usage).to.have.property('documents').that.is.a('number');
     expect(usage).to.have.property('pages').that.is.a('number');
   });
-  it('returns empty counts when end is before start', async () => {
+  it('Stats USAGE returns empty counts when end is before start', async () => {
     const usage = await stats.usage(
       '2024-01-20T23:59:59',
       '2020-01-20T00:00:00'
@@ -47,7 +47,7 @@ describe('Stats USAGE function', () => {
       pages: 0,
     });
   });
-  it('returns error 400 when range is wrongly defined', async () => {
+  it('Stats USAGE returns error 400 when range is wrongly defined', async () => {
     try {
       await stats.usage('bad-range-start', 'bad-range-end');
       assert.fail('should have thrown an error');
@@ -55,17 +55,8 @@ describe('Stats USAGE function', () => {
       assert.equal(error.message, 'Invalid range of dates');
     }
   });
-});
 
-describe('Stats AUTOMATION function', () => {
-  let apiKey: string, tenantUrl: string, stats: Stats;
-  beforeEach(() => {
-    apiKey = `${process.env.TEST_API_KEY}`;
-    tenantUrl = `${process.env.TEST_URL}/${process.env.TEST_TENANT}`;
-    stats = new Stats(apiKey, tenantUrl);
-  });
-
-  it('returns correct counts json when correct', async () => {
+  it('Stats AUTOMATION  returns correct counts json when correct', async () => {
     const automation = await stats.automation(
       '2020-01-20T00:00:00',
       '2024-01-20T23:59:59'
@@ -75,7 +66,7 @@ describe('Stats AUTOMATION function', () => {
     expect(automation).to.have.property('documents').that.is.an('object');
     expect(automation).to.have.property('fields').that.is.an('object');
   });
-  it('returns empty counts when end is before start', async () => {
+  it('Stats AUTOMATION  returns empty counts when end is before start', async () => {
     const automation = await stats.automation(
       '2024-01-20T23:59:59',
       '2020-01-20T00:00:00'
@@ -98,7 +89,7 @@ describe('Stats AUTOMATION function', () => {
       },
     });
   });
-  it('returns error 400 when range is wrongly defined', async () => {
+  it('Stats AUTOMATION  returns error 400 when range is wrongly defined', async () => {
     try {
       await stats.automation('bad-range-start', 'bad-range-end');
       assert.fail('should have thrown an error');

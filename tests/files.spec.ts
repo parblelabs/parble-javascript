@@ -30,7 +30,7 @@ describe('Files input classification', () => {
   });
 });
 
-describe('Files POST function', () => {
+describe('Files crud', () => {
   let apiKey: string, tenantUrl: string, files: Files;
   beforeEach(() => {
     apiKey = `${process.env.TEST_API_KEY}`;
@@ -38,12 +38,12 @@ describe('Files POST function', () => {
     files = new Files(apiKey, tenantUrl);
   });
 
-  it('returns correct file json when filepath is provided', async () => {
+  it('Files POST returns correct file json when filepath is provided', async () => {
     const file = await files.post('./tests/resources/automated_test_file.pdf');
     expect(file.filename).to.deep.equal(mockFileOutput.filename);
     expect(file.documents).to.deep.equal(mockFileOutput.documents);
   });
-  it('returns error when file is unreadable', async () => {
+  it('Files POST returns error when file is unreadable', async () => {
     try {
       await files.post('./tests/resources/appicon-terciary-shade.png');
       assert.fail('should have thrown an error');
@@ -51,22 +51,13 @@ describe('Files POST function', () => {
       assert.equal(error.message, 'Error while uploading the file');
     }
   });
-});
 
-describe('Files GET function', () => {
-  let apiKey: string, tenantUrl: string, files: Files;
-  beforeEach(() => {
-    apiKey = `${process.env.TEST_API_KEY}`;
-    tenantUrl = `${process.env.TEST_URL}/${process.env.TEST_TENANT}`;
-    files = new Files(apiKey, tenantUrl);
-  });
-
-  it('returns correct file json when id is correct', async () => {
+  it('Files GET returns correct file json when id is correct', async () => {
     const file = await files.get(`${process.env.TEST_FILE}`);
     expect(file.filename).to.deep.equal(mockFileOutput.filename);
     expect(file.documents).to.deep.equal(mockFileOutput.documents);
   });
-  it('returns correct error when id is incorrect', async () => {
+  it('Files GET returns correct error when id is incorrect', async () => {
     try {
       await files.get('non-existent-file-id');
       assert.fail('should have thrown an error');
@@ -74,24 +65,15 @@ describe('Files GET function', () => {
       assert.equal(error.message, 'File not found');
     }
   });
-});
 
-describe('Files DELETE function', () => {
-  let apiKey: string, tenantUrl: string, files: Files;
-  beforeEach(() => {
-    apiKey = `${process.env.TEST_API_KEY}`;
-    tenantUrl = `${process.env.TEST_URL}/${process.env.TEST_TENANT}`;
-    files = new Files(apiKey, tenantUrl);
-  });
-
-  it('deletes recently uploaded file', async () => {
+  it('Files DELETE deletes recently uploaded file', async () => {
     const postedFile = await files.post(
       './tests/resources/automated_test_file.pdf'
     );
     const deletion = await files.delete(postedFile.id);
     assert.equal(deletion.status, 204);
   });
-  it('returns correct error when id is incorrect', async () => {
+  it('Files DELETE returns correct error when id is incorrect', async () => {
     try {
       await files.delete('non-existent-file-id');
       assert.fail('should have thrown an error');
