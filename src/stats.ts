@@ -9,6 +9,7 @@ export class Stats {
   private passedHeaders = {
     headers: {
       'X-API-Key': this._apiKey,
+      Accept: 'application/json',
     },
   };
 

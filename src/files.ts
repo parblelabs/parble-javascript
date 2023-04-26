@@ -1,6 +1,6 @@
 import { promises as fspromises } from 'fs';
 import FormData from 'form-data';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import { PredictedFileOutput } from './types/predictedFileOutput';
 
@@ -13,6 +13,12 @@ export function classifyInput(input: string): string {
 export class Files {
   constructor(private _apiKey: string, private _apiUrl: string) {}
   private apiPath = '/files';
+  private passedHeaders = {
+    headers: {
+      'X-API-Key': this._apiKey,
+      Accept: 'application/json',
+    },
+  };
 
   /**
    * Posts a file to get the predictions
@@ -49,8 +55,7 @@ export class Files {
     try {
       const response = await axios.post(postDocUrl, formData, {
         headers: {
-          'X-API-Key': this._apiKey,
-          Accept: 'application/json',
+          ...this.passedHeaders.headers,
           'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
         },
       });
@@ -70,15 +75,28 @@ export class Files {
   async get(fileId: string): Promise<PredictedFileOutput> {
     const getDocUrl = `https://${this._apiUrl}${this.apiPath}/${fileId}`;
     try {
-      const response = await axios.get(getDocUrl, {
-        headers: {
-          'X-API-Key': this._apiKey,
-        },
-      });
+      const response = await axios.get(getDocUrl, this.passedHeaders);
       if (response.status !== 200) {
         throw new Error('File not found');
       }
       return response.data;
+    } catch (err) {
+      throw new Error('File not found');
+    }
+  }
+
+  /**
+   * Deletes permanently the prediction results for the provided fileId
+   * @param fileId Unique identifier for the file results to delete
+   */
+  async delete(fileId: string): Promise<AxiosResponse> {
+    const getDocUrl = `https://${this._apiUrl}${this.apiPath}/${fileId}`;
+    try {
+      const response = await axios.delete(getDocUrl, this.passedHeaders);
+      if (response.status !== 204) {
+        throw new Error('File not found');
+      }
+      return response;
     } catch (err) {
       throw new Error('File not found');
     }

@@ -39,9 +39,9 @@ describe('Files POST function', () => {
   });
 
   it('returns correct file json when filepath is provided', async () => {
-    const res = await files.post('./tests/resources/automated_test_file.pdf');
-    expect(res.filename).to.deep.equal(mockFileOutput.filename);
-    expect(res.documents).to.deep.equal(mockFileOutput.documents);
+    const file = await files.post('./tests/resources/automated_test_file.pdf');
+    expect(file.filename).to.deep.equal(mockFileOutput.filename);
+    expect(file.documents).to.deep.equal(mockFileOutput.documents);
   });
   it('returns error when file is unreadable', async () => {
     try {
@@ -62,13 +62,38 @@ describe('Files GET function', () => {
   });
 
   it('returns correct file json when id is correct', async () => {
-    const res = await files.get(`${process.env.TEST_FILE}`);
-    expect(res.filename).to.deep.equal(mockFileOutput.filename);
-    expect(res.documents).to.deep.equal(mockFileOutput.documents);
+    const file = await files.get(`${process.env.TEST_FILE}`);
+    expect(file.filename).to.deep.equal(mockFileOutput.filename);
+    expect(file.documents).to.deep.equal(mockFileOutput.documents);
   });
   it('returns correct error when id is incorrect', async () => {
     try {
       await files.get('non-existent-file-id');
+      assert.fail('should have thrown an error');
+    } catch (error) {
+      assert.equal(error.message, 'File not found');
+    }
+  });
+});
+
+describe('Files DELETE function', () => {
+  let apiKey: string, tenantUrl: string, files: Files;
+  beforeEach(() => {
+    apiKey = `${process.env.TEST_API_KEY}`;
+    tenantUrl = `${process.env.TEST_URL}/${process.env.TEST_TENANT}`;
+    files = new Files(apiKey, tenantUrl);
+  });
+
+  it('deletes recently uploaded file', async () => {
+    const postedFile = await files.post(
+      './tests/resources/automated_test_file.pdf'
+    );
+    const deletion = await files.delete(postedFile.id);
+    assert.equal(deletion.status, 204);
+  });
+  it('returns correct error when id is incorrect', async () => {
+    try {
+      await files.delete('non-existent-file-id');
       assert.fail('should have thrown an error');
     } catch (error) {
       assert.equal(error.message, 'File not found');
