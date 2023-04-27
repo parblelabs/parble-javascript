@@ -23,7 +23,6 @@ import { parbleSDK } from 'parble'
 const parble = new parbleSDK(PARBLE_TENANT, PARBLE_API_KEY);
 ```
 
-#
 ## Main usage examples
 
 ### Get predictions from a file upload
@@ -48,7 +47,6 @@ console.log(predictedFileJson);
 // Expect a JSON with: id, filename, timings, automated, number_of_pages and documents
 ```
 
-#
 ## Extra features
 
 ### Check json from a file id
