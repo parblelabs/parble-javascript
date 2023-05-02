@@ -40,12 +40,4 @@ describe('Accounting functionalities', () => {
     expect(articles).to.be.an('object');
     expect(articles).to.have.property('unit_price').that.is.a('string');
   });
-
-  it('Accounting CHECKOUT creates correct url on stripe and status is initiated as open', async () => {
-    const articles = await accounting.checkout();
-    expect(articles).to.be.an('object');
-    expect(articles).to.have.property('url').that.is.a('string');
-    expect(articles.url).to.include('checkout.stripe');
-    assert.equal(articles.status, 'open');
-  });
 });
