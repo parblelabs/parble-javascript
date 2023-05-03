@@ -30,7 +30,7 @@ describe('Files input classification', () => {
   });
 });
 
-describe('Files POST function', () => {
+describe('Files crud', () => {
   let apiKey: string, tenantUrl: string, files: Files;
   beforeEach(() => {
     apiKey = `${process.env.TEST_API_KEY}`;
@@ -38,38 +38,46 @@ describe('Files POST function', () => {
     files = new Files(apiKey, tenantUrl);
   });
 
-  it('returns correct file json when filepath is provided', async () => {
-    const res = await files.post('./tests/resources/automated_test_file.pdf');
-    expect(res.filename).to.deep.equal(mockFileOutput.filename);
-    expect(res.documents).to.deep.equal(mockFileOutput.documents);
-  });
-  it('returns error when file is unreadable', async () => {
-    const res = await files.post('./tests/resources/appicon-terciary-shade.png');
-    expect(res).to.deep.equal({
-      status: 415,
-      error: 'issue occurred while uploading',
-    });
-  });
-});
-
-describe('Files GET function', () => {
-  let apiKey: string, tenantUrl: string, files: Files;
-  beforeEach(() => {
-    apiKey = `${process.env.TEST_API_KEY}`;
-    tenantUrl = `${process.env.TEST_URL}/${process.env.TEST_TENANT}`;
-    files = new Files(apiKey, tenantUrl);
+  it('File success cycle POST > GET > DELETE function', async () => {
+    // post file
+    const postedFile = await files.post(
+      './tests/resources/automated_test_file.pdf'
+    );
+    expect(postedFile.filename).to.deep.equal(mockFileOutput.filename);
+    expect(postedFile.documents).to.deep.equal(mockFileOutput.documents);
+    // get file
+    const file = await files.get(postedFile.id);
+    expect(file.filename).to.deep.equal(mockFileOutput.filename);
+    expect(file.documents).to.deep.equal(mockFileOutput.documents);
+    // delete file
+    const deletion = await files.delete(postedFile.id);
+    assert.equal(deletion.status, 204);
   });
 
-  it('returns correct file json when id is correct', async () => {
-    const res = await files.get(`${process.env.TEST_FILE}`);
-    expect(res.filename).to.deep.equal(mockFileOutput.filename);
-    expect(res.documents).to.deep.equal(mockFileOutput.documents);
+  it('Files POST returns error when file is unreadable', async () => {
+    try {
+      await files.post('./tests/resources/appicon-terciary-shade.png');
+      assert.fail('should have thrown an error');
+    } catch (error) {
+      assert.equal(error.message, 'Error while uploading the file');
+    }
   });
-  it('returns correct error when id is incorrect', async () => {
-    const res = await files.get('123test');
-    expect(res).to.deep.equal({
-      status: 404,
-      error: 'issue occurred while getting the file json',
-    });
+
+  it('Files GET returns correct error when id is incorrect', async () => {
+    try {
+      await files.get('non-existent-file-id');
+      assert.fail('should have thrown an error');
+    } catch (error) {
+      assert.equal(error.message, 'File not found');
+    }
+  });
+
+  it('Files DELETE returns correct error when id is incorrect', async () => {
+    try {
+      await files.delete('non-existent-file-id');
+      assert.fail('should have thrown an error');
+    } catch (error) {
+      assert.equal(error.message, 'File not found');
+    }
   });
 });

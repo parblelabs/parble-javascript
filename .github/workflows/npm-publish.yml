@@ -23,7 +23,6 @@ jobs:
           echo TEST_URL=${{ secrets.TEST_URL }} >> .env
           echo TEST_TENANT=${{ secrets.TEST_TENANT }} >> .env
           echo TEST_API_KEY=${{ secrets.TEST_API_KEY }} >> .env
-          echo TEST_FILE=${{ secrets.TEST_FILE }} >> .env
           cat .env
       - run: npm test
 

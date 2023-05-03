@@ -1,21 +1,29 @@
-import { Files } from './files.js';
-import { validateParams } from './helpers/validateParams.js';
+import { Accounting } from './accounting';
+import { Apikeys } from './apikeys';
+import { Files } from './files';
+import { Stats } from './stats';
+import { Webhooks } from './webhooks';
+import { validateParams } from './helpers/validateParams';
 
 export class parbleSDK {
   private _apiUrl: string;
   private _apiKey: string;
 
+  accounting: Accounting;
+  apikeys: Apikeys;
   files: Files;
+  stats: Stats;
+  webhooks: Webhooks;
 
   constructor(tenant: string, apiKey: string) {
     validateParams(apiKey, tenant);
     this._apiUrl = `api.parble.com/v1/${tenant}`;
     this._apiKey = apiKey;
 
-
-    this.files = new Files(
-      this._apiKey,
-      this._apiUrl
-    );
+    this.accounting = new Accounting(this._apiKey, this._apiUrl);
+    this.apikeys = new Apikeys(this._apiKey, this._apiUrl);
+    this.files = new Files(this._apiKey, this._apiUrl);
+    this.stats = new Stats(this._apiKey, this._apiUrl);
+    this.webhooks = new Webhooks(this._apiKey, this._apiUrl);
   }
 }

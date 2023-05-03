@@ -15,19 +15,11 @@ export const data: PredictedFileOutput = {
         end_page: 0,
       },
       header_fields: {
-        email_receiver: {
-          automated: true,
-          confidence: 95,
-          page: 0,
-          coordinates: [0, -1, 0, -1],
-          text: 'capture@parble.com',
-          value: 'capture@parble.com',
-        },
         email_address: {
           automated: true,
           confidence: 95,
           page: 0,
-          coordinates: [0.2925, 0.1301, 0.4346, 0.1477],
+          coordinates: [0.6078, 0.2702, 0.9052, 0.3068],
           text: 'capture@parble.com',
           value: 'capture@parble.com',
         },
@@ -39,22 +31,21 @@ export const data: PredictedFileOutput = {
           text: 'Wed, 23 Nov 2022 09:23:26 +0000',
           value: '2022-11-23',
         },
+        email_receiver: {
+          automated: true,
+          confidence: 95,
+          page: 0,
+          coordinates: [0, -1, 0, -1],
+          text: 'capture@parble.com',
+          value: 'capture@parble.com',
+        },
         email_subject: {
           automated: true,
           confidence: 100,
-          page: 0,
           coordinates: [0, -1, 0, -1],
+          page: 0,
           text: '',
           value: '',
-        },
-        email_body: {
-          automated: true,
-          confidence: 70,
-          page: 0,
-          coordinates: [0, -1, 0, -1],
-          text: 'Attachments:            New_Belgian_ID.pdf\n\n\n                Hi Parble,\n\n                Can you please provide the data from this ID?\n\n                Thanks,\n                Rebecca\n\n                Rebecca Rohmann\n                Account Executive | Parble\n\n                Phone: +32 2 320 22 88\n                Email: rebecca@parble.com\n                Address: Rue des Poissonniers 13, 1000 Brussels, Belgium',
-          value:
-            'Attachments: New_Belgian_ID.pdf\n\n\n Hi Parble,\n\n Can you please provide the data from this ID?\n\n Thanks,\n Rebecca\n\n Rebecca Rohmann\n Account Executive | Parble\n\n Phone: +32 2 320 22 88\n Email: rebecca@parble.com\n Address: Rue des Poissonniers 13, 1000 Brussels, Belgium',
         },
       },
       line_items: {},
@@ -70,14 +61,6 @@ export const data: PredictedFileOutput = {
         end_page: 1,
       },
       header_fields: {
-        id_type: {
-          automated: true,
-          confidence: 93,
-          page: 1,
-          coordinates: [0, -0.0006, 0, -0.0006],
-          text: 'national_id_front',
-          value: 'national_id_front',
-        },
         id_card_number: {
           automated: true,
           confidence: 83,
@@ -96,7 +79,7 @@ export const data: PredictedFileOutput = {
         },
         id_birth_date: {
           automated: true,
-          confidence: 100,
+          confidence: 99,
           page: 1,
           coordinates: [0.751, 0.4675, 0.8912, 0.4789],
           text: '28 02 1995',
