@@ -48,7 +48,7 @@ export const data: PredictedFileOutput = {
           value: '',
         },
       },
-      line_items: {},
+      tables: {},
     },
     {
       filename: 'automated_test_file.pdf',
@@ -102,7 +102,7 @@ export const data: PredictedFileOutput = {
           value: 'F',
         },
       },
-      line_items: {},
+      tables: {},
     },
   ],
   filename: 'automated_test_file.pdf',

@@ -47,5 +47,5 @@ export type Document = {
   /**
    * Line items extracted in the document.
    */
-  line_items: { [table_name: string]: any };
+  tables: { [table_name: string]: any };
 };
