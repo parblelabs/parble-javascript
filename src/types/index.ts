@@ -1,3 +1,4 @@
+export * from './accounting';
 export * from './apikey';
 export * from './document';
 export * from './predictedFileOutput';
