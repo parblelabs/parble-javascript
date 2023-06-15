@@ -17,6 +17,7 @@ export class Webhooks {
    * @param events An array of strings representing the trigger events
    * @param target The URI of the webhook endpoint, starting with http:// or https://
    * @param headers Optional headers to include in the webhook
+   * @returns {Webhook} The created webhook
    */
   async postOne(webhook: WebhookPayload): Promise<Webhook> {
     const postWebhookUrl = `https://${this._apiUrl}${this.apiPath}`;
@@ -34,6 +35,7 @@ export class Webhooks {
 
   /**
    * Gets the list of all webhooks
+   * @returns {Webhook[]} The list of all webhooks
    */
   async getAll(): Promise<Webhook[]> {
     const getWebhookUrl = `https://${this._apiUrl}${this.apiPath}`;
@@ -48,6 +50,7 @@ export class Webhooks {
   /**
    * Retrieves a webhook by its ID
    * @param webhookId Unique identifier for the webhook to retrieve
+   * @returns {Webhook} The webhook
    */
   async getOne(webhookId: string): Promise<Webhook> {
     const getWebhookUrl = `https://${this._apiUrl}${this.apiPath}/${webhookId}`;
@@ -62,6 +65,7 @@ export class Webhooks {
   /**
    * Deletes a webhook by its ID
    * @param webhookId Unique identifier for the webhook to retrieve
+   * @returns {AxiosResponse} The response from the API
    */
   async deleteOne(webhookId: string): Promise<AxiosResponse> {
     const deleteWebhookUrl = `https://${this._apiUrl}${this.apiPath}/${webhookId}`;
