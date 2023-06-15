@@ -26,9 +26,9 @@ However if you're building your own module, or using TypeScript, the equivalent 
 ```js
 import * as parble from 'parble';
 ```
-With either of the possibilities the next step is to initialize the Parble client with your settings:
-```ts
-const parble_sdk = new parble.parbleSDK(my_tenant: string, my_api_key: string);
+With either of the possibilities the next step is to initialize the Parble client with your settings, both passed as strings:
+```js
+const parble_sdk = new parble.parbleSDK(my_tenant, my_api_key);
 ```
 ## Main usage examples
 
