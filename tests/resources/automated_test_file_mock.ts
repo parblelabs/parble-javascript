@@ -19,7 +19,7 @@ export const data: PredictedFileOutput = {
           automated: true,
           confidence: 95,
           page: 0,
-          coordinates: [0.6078, 0.2702, 0.9052, 0.3068],
+          coordinates: [0.2918, 0.1297, 0.4345, 0.1473],
           text: 'capture@parble.com',
           value: 'capture@parble.com',
         },
