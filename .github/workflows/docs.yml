@@ -13,18 +13,17 @@ permissions:
   contents: write
 
 jobs:
-  build_and_lint:
+  docs:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
-      - name: Generate
-        uses: TypeStrong/typedoc-action@v1
-        with:
-          args: --entrypoints src/*
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Generate docs
+        run: npx typedoc --out docs/ src/
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages
-          folder: docs
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
