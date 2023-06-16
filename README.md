@@ -6,6 +6,8 @@ Official Node.js SDK for [Parble](https://parble.com/home) intelligent document 
 To access the API you will need a Parble account. Sign up for free at
 [signup](https://parble.com/signup).
 
+If you would like to check the extended documentation please check this [link](https://parblelabs.github.io/parble-javascript).
+
 ## Installation
 ### With NPM
 ```bash
