@@ -58,7 +58,7 @@ async function process_file() {
 ```
 
 ## Extra features
-We will show here the async/await forms but all can be used by promise chaning also as shown above.
+We will show here the async/await forms but all can be used by promise chaining also as shown above.
 ### Check json from a file id
 To check json from a previously processed file you need to call the files.get method using the file id as argument.
 ```ts
