@@ -25,6 +25,7 @@ export class Files {
    * @param file Can be a:
    * - local or temp filepath such as /path/to/local/file.pdf;
    * - base64 image string such as data:@file/pdf;base64,....
+   * @returns {PredictedFileOutput} The prediction results
    */
   async post(file: string): Promise<PredictedFileOutput> {
     /** Throw an error if the user submits a file that is not in the scope */
@@ -71,6 +72,7 @@ export class Files {
   /**
    * Retrieves prediction results for the provided fileId
    * @param fileId Unique identifier for the file results to retrieve
+   * @returns {PredictedFileOutput} The prediction results
    */
   async get(fileId: string): Promise<PredictedFileOutput> {
     const getDocUrl = `https://${this._apiUrl}${this.apiPath}/${fileId}`;
@@ -88,6 +90,7 @@ export class Files {
   /**
    * Deletes permanently the prediction results for the provided fileId
    * @param fileId Unique identifier for the file results to delete
+   * @returns {AxiosResponse} The response from the API
    */
   async delete(fileId: string): Promise<AxiosResponse> {
     const getDocUrl = `https://${this._apiUrl}${this.apiPath}/${fileId}`;

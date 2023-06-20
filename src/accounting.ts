@@ -14,6 +14,7 @@ export class Accounting {
 
   /**
    * Checks the balance of the account
+   * @returns {Balance} The balance of the account
    */
   async balance(): Promise<Balance> {
     const checkBalanceUrl = `https://${this._apiUrl}${this.apiPath}/balance`;
@@ -27,6 +28,7 @@ export class Accounting {
 
   /**
    * Checks available articles for adding balance
+   * @returns {Article} The available articles
    */
   async articles(): Promise<Article> {
     const checkArticlesUrl = `https://${this._apiUrl}${this.apiPath}/pricing`;
@@ -40,6 +42,7 @@ export class Accounting {
 
   /**
    * Creates a checkout session for adding balance to the organization
+   * @returns {PaymentLink} The payment link
    */
   async checkout(): Promise<PaymentLink> {
     const paymentCreationUrl = `https://${this._apiUrl}${this.apiPath}/checkout`;

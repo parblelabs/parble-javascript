@@ -17,6 +17,7 @@ export class Stats {
    * Gets the usage stats in certain time period
    * @param start_date Can be a: string i.ex.:(2020-01-20T00:00:00)
    * @param end_date Can be a: string i.ex.:(2020-01-20T23:59:59)
+   * @returns {UsageStats} The usage stats
    */
   async usage(start_date: string, end_date: string): Promise<UsageStats> {
     const getUsageUrl = `https://${this._apiUrl}${this.apiPath}/usage?start_date=${start_date}&end_date=${end_date}`;
@@ -32,6 +33,7 @@ export class Stats {
    * Gets the automation stats in certain time period
    * @param start_date Can be a: string i.ex.:(2020-01-20T00:00:00)
    * @param end_date Can be a: string i.ex.:(2020-01-20T23:59:59)
+   * @returns {AutomationStats} The automation stats
    */
   async automation(
     start_date: string,

@@ -14,6 +14,7 @@ export class Apikeys {
 
   /**
    * Create a new API key
+   * @returns {ApiKey} The new API key
    */
   async createOne(): Promise<ApiKey> {
     const createApikeyUrl = `https://${this._apiUrl}${this.apiPath}`;
@@ -31,6 +32,7 @@ export class Apikeys {
 
   /**
    * Gets the list of all the API keys
+   * @returns {ApiKey[]} The list of all the API keys
    */
   async getAll(): Promise<ApiKey[]> {
     const getApikeyUrl = `https://${this._apiUrl}${this.apiPath}`;
@@ -45,6 +47,7 @@ export class Apikeys {
   /**
    * Retrieves an API key by its ID
    * @param apikeyId Unique identifier for the API key to retrieve
+   * @returns {ApiKey} The API key
    */
   async getOne(apikeyId: string): Promise<ApiKey> {
     const getApikeyUrl = `https://${this._apiUrl}${this.apiPath}/${apikeyId}`;
@@ -59,6 +62,7 @@ export class Apikeys {
   /**
    * Deletes an API key by its ID
    * @param apikeyId Unique identifier for the API key to retrieve
+   * @returns {AxiosResponse} The API key
    */
   async deleteOne(apikeyId: string): Promise<AxiosResponse> {
     const deleteApikeyUrl = `https://${this._apiUrl}${this.apiPath}/${apikeyId}`;

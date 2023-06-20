@@ -1,4 +1,4 @@
-interface AutomationItem {
+export type AutomationItem = {
   /**
    * Rate of automation [stp (automated) vs total]
    */
