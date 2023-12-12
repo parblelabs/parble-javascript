@@ -39,21 +39,23 @@ import * as parble from 'parble';
 With either of the possibilities the next step is to initialize the Parble client with your settings, both passed as strings:
 
 ```js
-const parble_sdk = new parble.parbleSDK(my_tenant, my_api_key);
+const parble_sdk = new parble.parbleSDK('your_tenant', 'your_api_key');
 ```
 
 ## Main usage examples
 
 ### Get predictions from a file upload
 
-After initializing the client, to process a file you need to call the files.post method indicating the file local or temp path or using a base64 string as an argument. After processing is over you can see the results by either chaining to the promise or by async/await.
+After initializing the client, to process a file you need to call the files.post method by, either indicating the file local or temp path, or using a base64 string as an argument. The inbox_id where the file needs to be sent is also passed as a second argument. After processing is over you can see the results by either chaining to the promise or by async/await.
 
 ### With local or temp\* file path using chaining
 
 ```ts
-parble_sdk.files.post('/path/to/your/file').then((file_results: PredictedFileOutput) => {
-  console.log(file_results);
-});
+parble_sdk.files
+  .post('/path/to/your/file', 'your_inbox_id')
+  .then((file_results: PredictedFileOutput) => {
+    console.log(file_results);
+  });
 
 // Expect a JSON with: id, filename, timings, automated, number_of_pages and documents
 ```
@@ -64,7 +66,10 @@ parble_sdk.files.post('/path/to/your/file').then((file_results: PredictedFileOut
 
 ```js
 async function process_file() {
-  const file_results = await parble_sdk.files.post("data:@file/pdf;base64,JVBERi0c..."));
+  const file_results = await parble_sdk.files.post(
+    'data:@file/pdf;base64,JVBERi0c...',
+    'your_inbox_id'
+  );
   console.log(file_results);
 }
 

@@ -23,10 +23,7 @@ describe('Files input classification', () => {
     assert.strictEqual(classifyInput('/path/to/file'), 'pathlike');
   });
   it('goes with base64 if needed', () => {
-    assert.strictEqual(
-      classifyInput('data:@file/pdf;base64,JVBERi...'),
-      'base64'
-    );
+    assert.strictEqual(classifyInput('data:@file/pdf;base64,JVBERi...'), 'base64');
   });
 });
 
@@ -41,7 +38,8 @@ describe('Files crud', () => {
   it('File success cycle POST > GET > DELETE function', async () => {
     // post file
     const postedFile = await files.post(
-      './tests/resources/automated_test_file.pdf'
+      './tests/resources/automated_test_file.pdf',
+      'inbox_id_123'
     );
     expect(postedFile.filename).to.deep.equal(mockFileOutput.filename);
     expect(postedFile.documents).to.deep.equal(mockFileOutput.documents);
@@ -56,7 +54,7 @@ describe('Files crud', () => {
 
   it('Files POST returns error when file is unreadable', async () => {
     try {
-      await files.post('./tests/resources/appicon-terciary-shade.png');
+      await files.post('./tests/resources/appicon-terciary-shade.png', 'inbox_id_123');
       assert.fail('should have thrown an error');
     } catch (error) {
       assert.equal(error.message, 'Error while uploading the file');

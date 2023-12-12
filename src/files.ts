@@ -16,7 +16,7 @@ export class Files {
   private passedHeaders = {
     headers: {
       'X-API-Key': this._apiKey,
-      Accept: 'application/json',
+      'Accept': 'application/json',
     },
   };
 
@@ -25,12 +25,17 @@ export class Files {
    * @param file Can be a:
    * - local or temp filepath such as /path/to/local/file.pdf;
    * - base64 image string such as data:@file/pdf;base64,....
+   * @param inbox_id Unique identifier for the inbox to which the file belongs
    * @returns {PredictedFileOutput} The prediction results
    */
-  async post(file: string): Promise<PredictedFileOutput> {
+  async post(file: string, inbox_id: string): Promise<PredictedFileOutput> {
     /** Throw an error if the user submits a file that is not in the scope */
     if (!file || typeof file !== 'string') {
       throw new Error('Please provide the file in a valid string');
+    }
+    /** Throw an error if the user submits without indicating the inbox_id */
+    if (!inbox_id || typeof inbox_id !== 'string') {
+      throw new Error('Please provide the correct inbox_id');
     }
 
     const formData: any = new FormData();
@@ -51,6 +56,7 @@ export class Files {
         formData.append('file', buffer64, { filename: nameContent });
         break;
     }
+    formData.append('inbox_id', inbox_id);
 
     const postDocUrl = `https://${this._apiUrl}${this.apiPath}`;
     try {
