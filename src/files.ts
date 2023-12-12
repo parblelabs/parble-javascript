@@ -34,7 +34,7 @@ export class Files {
       throw new Error('Please provide the file in a valid string');
     }
     /** Throw an error if the user submits without indicating the inbox_id */
-    if (!inbox_id || typeof inbox_id !== 'string') {
+    if (typeof inbox_id !== 'string') {
       throw new Error('Please provide the correct inbox_id');
     }
 
@@ -56,7 +56,9 @@ export class Files {
         formData.append('file', buffer64, { filename: nameContent });
         break;
     }
-    formData.append('inbox_id', inbox_id);
+    if (inbox_id) {
+      formData.append('inbox_id', inbox_id);
+    }
 
     const postDocUrl = `https://${this._apiUrl}${this.apiPath}`;
     try {
@@ -71,6 +73,7 @@ export class Files {
       }
       return response.data;
     } catch (err) {
+      console.log('err', err);
       throw new Error('Error while uploading the file');
     }
   }

@@ -37,10 +37,7 @@ describe('Files crud', () => {
 
   it('File success cycle POST > GET > DELETE function', async () => {
     // post file
-    const postedFile = await files.post(
-      './tests/resources/automated_test_file.pdf',
-      'inbox_id_123'
-    );
+    const postedFile = await files.post('./tests/resources/automated_test_file.pdf', '');
     expect(postedFile.filename).to.deep.equal(mockFileOutput.filename);
     expect(postedFile.documents).to.deep.equal(mockFileOutput.documents);
     // get file
@@ -54,8 +51,8 @@ describe('Files crud', () => {
 
   it('Files POST returns error when file is unreadable', async () => {
     try {
-      await files.post('./tests/resources/appicon-terciary-shade.png', 'inbox_id_123');
-      assert.fail('should have thrown an error');
+      await files.post('./tests/resources/appicon-terciary-shade.png', '');
+      assert.fail('Error while uploading the file');
     } catch (error) {
       assert.equal(error.message, 'Error while uploading the file');
     }

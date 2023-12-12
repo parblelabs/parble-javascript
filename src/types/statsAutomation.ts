@@ -11,7 +11,7 @@ export type AutomationItem = {
    * Total count
    */
   total: number;
-}
+};
 
 /**
  * Automation stats endpoint response

@@ -27,7 +27,7 @@ export const data: PredictedFileOutput = {
           automated: true,
           confidence: 70,
           page: 0,
-          coordinates: [0, -1, 0, -1],
+          coordinates: [0.1176, 0.0909, 0.1584, 0.1097],
           text: 'Wed, 23 Nov 2022 09:23:26 +0000',
           value: '2022-11-23',
         },
@@ -35,14 +35,14 @@ export const data: PredictedFileOutput = {
           automated: true,
           confidence: 95,
           page: 0,
-          coordinates: [0, -1, 0, -1],
+          coordinates: [0.1176, 0.0909, 0.1584, 0.1097],
           text: 'capture@parble.com',
           value: 'capture@parble.com',
         },
         email_subject: {
           automated: true,
           confidence: 100,
-          coordinates: [0, -1, 0, -1],
+          coordinates: [0.1176, 0.1485, 0.1725, 0.1667],
           page: 0,
           text: '',
           value: '',
@@ -63,7 +63,7 @@ export const data: PredictedFileOutput = {
       header_fields: {
         id_card_number: {
           automated: true,
-          confidence: 83,
+          confidence: 80,
           page: 1,
           coordinates: [0.3811, 0.553, 0.5842, 0.5684],
           text: '000-0003872-89',
@@ -95,7 +95,7 @@ export const data: PredictedFileOutput = {
         },
         id_gender: {
           automated: true,
-          confidence: 8,
+          confidence: 5,
           page: 1,
           coordinates: [0.4158, 0.4669, 0.4279, 0.4806],
           text: 'F',

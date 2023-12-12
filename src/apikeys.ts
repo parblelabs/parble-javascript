@@ -8,7 +8,7 @@ export class Apikeys {
   private passedHeaders = {
     headers: {
       'X-API-Key': this._apiKey,
-      Accept: 'application/json',
+      'Accept': 'application/json',
     },
   };
 
@@ -19,11 +19,7 @@ export class Apikeys {
   async createOne(): Promise<ApiKey> {
     const createApikeyUrl = `https://${this._apiUrl}${this.apiPath}`;
     try {
-      const response = await axios.post(
-        createApikeyUrl,
-        null,
-        this.passedHeaders
-      );
+      const response = await axios.post(createApikeyUrl, null, this.passedHeaders);
       return response.data;
     } catch (err) {
       throw new Error('Error while posting the API key');

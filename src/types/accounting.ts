@@ -1,5 +1,5 @@
 /**
- * Webhook payload object includes the total all-time credit, the total all-time usage
+ * Balance payload object includes the total all-time credit, the total all-time usage
  * and the current balance which is simply the remaining credit.
  */
 export type Balance = {

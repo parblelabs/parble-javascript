@@ -8,7 +8,7 @@ export class Accounting {
   private passedHeaders = {
     headers: {
       'X-API-Key': this._apiKey,
-      Accept: 'application/json',
+      'Accept': 'application/json',
     },
   };
 
@@ -47,11 +47,7 @@ export class Accounting {
   async checkout(): Promise<PaymentLink> {
     const paymentCreationUrl = `https://${this._apiUrl}${this.apiPath}/checkout`;
     try {
-      const response = await axios.post(
-        paymentCreationUrl,
-        null,
-        this.passedHeaders
-      );
+      const response = await axios.post(paymentCreationUrl, null, this.passedHeaders);
       return response.data;
     } catch (err) {
       throw new Error('Error while creating a payment session');

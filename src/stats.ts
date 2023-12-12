@@ -9,7 +9,7 @@ export class Stats {
   private passedHeaders = {
     headers: {
       'X-API-Key': this._apiKey,
-      Accept: 'application/json',
+      'Accept': 'application/json',
     },
   };
 
@@ -35,10 +35,7 @@ export class Stats {
    * @param end_date Can be a: string i.ex.:(2020-01-20T23:59:59)
    * @returns {AutomationStats} The automation stats
    */
-  async automation(
-    start_date: string,
-    end_date: string
-  ): Promise<AutomationStats> {
+  async automation(start_date: string, end_date: string): Promise<AutomationStats> {
     const getAutomationUrl = `https://${this._apiUrl}${this.apiPath}/automation?start_date=${start_date}&end_date=${end_date}`;
     try {
       const response = await axios.get(getAutomationUrl, this.passedHeaders);
