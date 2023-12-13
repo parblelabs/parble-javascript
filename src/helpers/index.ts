@@ -1,1 +1,1 @@
-export * from "./validateParams";
+export * from './validateParams';
