@@ -33,9 +33,13 @@ export class Files {
     if (!file || typeof file !== 'string') {
       throw new Error('Please provide the file in a valid string');
     }
-    /** Throw an error if the user submits without indicating the inbox_id */
+    /** Throw an error if the user submits without the inbox_id being a string */
     if (typeof inbox_id !== 'string') {
-      throw new Error('Please provide the correct inbox_id');
+      throw new Error('Please provide the inbox_id as a string');
+    }
+    /** Throw an error if the user submits the inbox_id but it has the wrong length */
+    if (inbox_id.length && inbox_id.length !== 24) {
+      throw new Error('Please provide a correct inbox_id');
     }
 
     const formData: any = new FormData();
